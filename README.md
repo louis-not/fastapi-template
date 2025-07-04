@@ -75,9 +75,6 @@ The API will be available at `http://localhost:8000`
 
 - `GET /ping` - Health check
 - `GET /` - Root endpoint
-- `GET /api/v1/items` - Get all items
-- `GET /api/v1/items/{item_id}` - Get specific item
-- `POST /api/v1/items` - Create new item
 
 ## Logger Usage
 
