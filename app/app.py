@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings
 from routes import router as api_router
+from utils.logger import server_logger
 
 # Create FastAPI application
 app = FastAPI(
@@ -16,6 +17,20 @@ app = FastAPI(
     version=settings.APP_VERSION,
     description="FastAPI Backend Template",
 )
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize application on startup."""
+    server_logger.info("Application startup initiated")
+    server_logger.info("FastAPI application started successfully", 
+                      title=settings.APP_TITLE, 
+                      version=settings.APP_VERSION)
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Clean up on shutdown."""
+    server_logger.info("Application shutdown initiated")
+    server_logger.info("FastAPI application stopped")
 
 # Add CORS middleware
 app.add_middleware(
@@ -36,6 +51,7 @@ async def ping():
     Health check endpoint to verify the API is running.
     Returns a simple success message.
     """
+    server_logger.debug("Health check endpoint called")
     return {"status": "success", "message": "API is running"}
 
 # Root endpoint

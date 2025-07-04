@@ -79,6 +79,36 @@ The API will be available at `http://localhost:8000`
 - `GET /api/v1/items/{item_id}` - Get specific item
 - `POST /api/v1/items` - Create new item
 
+## Logger Usage
+
+The template includes a categorized logger utility for easy service-specific logging:
+
+```python
+from utils.logger import get_logger
+
+# Create service-specific logger
+upload_logger = get_logger("upload")
+
+# Log with context
+upload_logger.info("File uploaded", filename="doc.pdf", size=1024, user_id=123)
+
+# Use pre-configured loggers
+from utils.logger import server_logger, upload_logger, db_logger, auth_logger
+```
+
+### Log Files
+- `logs/server.log` - Server-related logs
+- `logs/upload.log` - Upload service logs
+- `logs/database.log` - Database operation logs
+- `logs/[service_name].log` - Custom service logs
+
+### Log Levels
+- `DEBUG` - Detailed debugging information
+- `INFO` - General information about program execution
+- `WARNING` - Something unexpected happened
+- `ERROR` - A serious problem occurred
+- `CRITICAL` - A very serious error occurred
+
 ## Environment Variables
 
 See `.env.example` for available configuration options.
