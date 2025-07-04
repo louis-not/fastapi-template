@@ -73,8 +73,33 @@ The API will be available at `http://localhost:8000`
 
 ## Sample Endpoints
 
-- `GET /ping` - Health check
-- `GET /` - Root endpoint
+- `GET /ping` - Health check (public)
+- `GET /` - Root endpoint (public)
+- `GET /secure_endpoint` - Secure endpoint (requires API key)
+
+## Authentication
+
+The template includes simple API key authentication for testing purposes.
+
+### Using API Key
+
+Include the API key in the Authorization header as a Bearer token:
+
+```bash
+# Public endpoint (no auth required)
+curl http://localhost:8000/ping
+
+# Secure endpoint (requires API key)
+curl -H "Authorization: Bearer your-secret-api-key-change-this" \
+  http://localhost:8000/secure_endpoint
+```
+
+### Configuration
+
+Set your API key in the `.env` file:
+```env
+API_KEY=your-secret-api-key-change-this
+```
 
 ## Logger Usage
 

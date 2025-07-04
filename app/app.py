@@ -7,9 +7,11 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from fastapi import Depends
 from config import settings
 from routes import router as api_router
 from utils.logger import server_logger
+from utils.auth import verify_api_key
 
 # Create FastAPI application
 app = FastAPI(
@@ -64,6 +66,18 @@ async def root():
         "message": "FastAPI Backend Template",
         "version": settings.APP_VERSION,
         "docs": "/docs"
+    }
+
+@app.get("/secure_endpoint")
+async def secure_endpoint(_: bool = Depends(verify_api_key)):
+    """
+    Secure endpoint that requires API key authentication.
+    """
+    server_logger.info("Secure endpoint accessed successfully")
+    return {
+        "message": "This is a secure endpoint",
+        "authenticated": True,
+        "api_key_valid": True
     }
 
 if __name__ == "__main__":

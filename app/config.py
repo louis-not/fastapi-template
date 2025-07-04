@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     
     # CORS settings
     ALLOWED_ORIGINS: List[str] = ["*"]
+    
+    # API Key Authentication
+    API_KEY: str = "your-secret-api-key-change-this"
 
     class Config:
         env_file = ".env"
